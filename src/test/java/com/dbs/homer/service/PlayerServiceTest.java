@@ -12,10 +12,10 @@ class PlayerServiceTest {
     PlayerService playerService;
 
     @Test
-    public void given_when_then() throws Exception {
+    public void findBatters() throws Exception {
 
         //Given
-        playerService.findAll();
+        playerService.findBattersBySquadId(0);
 
         //When
 
@@ -23,5 +23,15 @@ class PlayerServiceTest {
 
     }
 
+    @Test
+    public void findPitcher() throws Exception {
+
+        //Given
+        playerService.findPitchersBySquadId(0);
+        //When
+
+        //Then
+
+    }
 
 }
