@@ -1,5 +1,6 @@
 package com.dbs.homer.repository.domain;
 
+import com.dbs.homer.controller.dto.BaseballPosition;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,16 +1,21 @@
 package com.dbs.homer.repository;
 
-import com.dbs.homer.repository.domain.Batter;
-import com.dbs.homer.repository.domain.Pitcher;
-import com.dbs.homer.repository.domain.Player;
+import com.dbs.homer.controller.request.SearchCond;
+import com.dbs.homer.repository.domain.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
+@Slf4j
 public class PlayerRepository {
 
     private final JdbcTemplate template;
@@ -32,18 +37,20 @@ public class PlayerRepository {
         return template.query(sql, batterRowMapper(), squadId);
     }
 
-    public List<Pitcher> findPitcherBySquadId(Integer squadId) {
-        String sql = "SELECT p.first_name, p.last_name, c.name, ps.position, ps.games_played, ps.innings, ps.wins, ps.losses, \n" +
-                "CASE\n" +
-                "WHEN ps.innings = 0 THEN 0\n" +
-                "ELSE (ps.earned_runs / ps.innings * 9) END AS era\n" +
-                "FROM player p \n" +
-                "JOIN pitcher ps ON p.id = ps.player_id\n" +
-                "JOIN club c ON p.club_id = c.club_id\n" +
-                "WHERE ps.squad_id = ?\n" +
-                "AND ps.position IN (0, 1);";
+    public Pitcher findPitcherBySquadId(Integer squadId) {
+        String sql = """
+                SELECT p.first_name, p.last_name, c.name, ps.position, ps.games_played, ps.innings, ps.wins, ps.losses,\s
+                CASE
+                WHEN ps.innings = 0 THEN 0
+                ELSE (ps.earned_runs / ps.innings * 9) END AS era
+                FROM player p\s
+                JOIN pitcher ps ON p.id = ps.player_id
+                JOIN club c ON p.club_id = c.club_id
+                WHERE ps.squad_id = ?
+                AND ps.position IN (0, 1);
+                """;
 
-        return template.query(sql, pitcherRowMapper(), squadId);
+        return template.queryForObject(sql, pitcherRowMapper(), squadId);
     }
 
     private RowMapper<Pitcher> pitcherRowMapper() {
@@ -71,20 +78,76 @@ public class PlayerRepository {
                 .build();
     }
 
+//    private RowMapper<Player> playerRowMapper() {
+//        return (rs, rowNum) -> Player.builder()
+//                .id(rs.getInt("id"))
+//                .firstName(rs.getString("first_name"))
+//                .lastName(rs.getString("last_name"))
+//                .primaryNum(rs.getInt("primary_num"))
+//                .clubId(rs.getInt("club_id"))
+//                .playerPhoto(rs.getString("player_photo"))
+//                .power(rs.getInt("power"))
+//                .stuff(rs.getInt("stuff"))
+//                .control(rs.getInt("control"))
+//                .contact(rs.getInt("contact"))
+//                .discipline(rs.getInt("discipline"))
+//                .build();
+//    }
+
+    public List<Player> searchPlayer(SearchCond cond) {
+
+        String playerName = cond.playerName();
+        String clubName = cond.clubName();
+        Integer position = cond.position();
+
+        if (position == 1) {
+            String sql = """
+                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num
+                FROM player p
+                JOIN club c ON p.club_id = c.club_id
+                JOIN player_position pp ON p.id = pp.player_id
+                WHERE pp.position IN (0, 1)
+                AND c.name = ?
+                """;
+
+            if (StringUtils.hasText(playerName)) {
+                sql += " AND (p.first_name LIKE CONCAT('%', ?, '%') OR p.last_name LIKE CONCAT('%', ?, '%'))";
+                log.info("sql - {}", sql);
+                return template.query(sql, playerRowMapper(), clubName, playerName, playerName);
+            }
+
+            log.info("sql - {}", sql);
+            return template.query(sql, playerRowMapper(), clubName);
+        }
+
+        String sql = """
+                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num
+                FROM player p
+                JOIN club c ON p.club_id = c.club_id
+                JOIN player_position pp ON p.id = pp.player_id
+                WHERE pp.position = ?
+                AND c.name = ?
+                """;
+
+        if (StringUtils.hasText(playerName)) {
+            sql += " AND (p.first_name LIKE CONCAT('%', ?, '%') OR p.last_name LIKE CONCAT('%', ?, '%'))";
+            log.info("sql - {}", sql);
+            return template.query(sql, playerRowMapper(), position, clubName, playerName, playerName);
+        }
+        log.info("sql - {}", sql);
+        return template.query(sql, playerRowMapper(), position, clubName);
+    }
+
+    private RowMapper<BatterStats> batterStatsRowMapper() {
+        return BeanPropertyRowMapper.newInstance(BatterStats.class);
+    }
+
+    private RowMapper<PitcherStats> pitcherStatsRowMapper() {
+        return BeanPropertyRowMapper.newInstance(PitcherStats.class);
+    }
+
     private RowMapper<Player> playerRowMapper() {
-        return (rs, rowNum) -> Player.builder()
-                .id(rs.getInt("id"))
-                .firstName(rs.getString("first_name"))
-                .lastName(rs.getString("last_name"))
-                .primaryNum(rs.getInt("primary_num"))
-                .clubId(rs.getInt("club_id"))
-                .playerPhoto(rs.getString("player_photo"))
-                .power(rs.getInt("power"))
-                .stuff(rs.getInt("stuff"))
-                .control(rs.getInt("control"))
-                .contact(rs.getInt("contact"))
-                .discipline(rs.getInt("discipline"))
-                .build();
+        return BeanPropertyRowMapper.newInstance(Player.class);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.dbs.homer.repository.domain;
+package com.dbs.homer.controller.dto;
 
 public enum BaseballPosition {
     BULLPEN_PITCHER(0, "중간 계투 (불펜 투수)"),

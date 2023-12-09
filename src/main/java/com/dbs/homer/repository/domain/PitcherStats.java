@@ -1,21 +1,20 @@
 package com.dbs.homer.repository.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Player {
+@Builder
+public class PitcherStats {
 
     private String firstName;
     private String lastName;
     private String playerPhoto;
-    private int primaryNum;
     private int stuff;
     private int control;
-    private int contact;
-    private int power;
-    private int discipline;
-
 
 }

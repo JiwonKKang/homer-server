@@ -1,5 +1,6 @@
 package com.dbs.homer.service;
 
+import com.dbs.homer.controller.request.SearchCond;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,19 +16,9 @@ class PlayerServiceTest {
     public void findBatters() throws Exception {
 
         //Given
-        playerService.findBattersBySquadId(0);
 
-        //When
-
-        //Then
-
-    }
-
-    @Test
-    public void findPitcher() throws Exception {
-
-        //Given
-        playerService.findPitchersBySquadId(0);
+        SearchCond cond = new SearchCond("david", "los angeles Angels", 6);
+        playerService.searchPlayer(cond);
         //When
 
         //Then
