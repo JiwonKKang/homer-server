@@ -12,11 +12,11 @@ public class Player {
     private String firstName;
     private String lastName;
     private String playerPhoto;
-    private int playerNum;
+    private int primaryNum;
     private int clubId;
     private int stuff;
     private int control;
-    private int contract;
+    private int contact;
     private int power;
     private int discipline;
 

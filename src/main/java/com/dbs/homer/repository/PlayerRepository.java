@@ -28,13 +28,13 @@ public class PlayerRepository {
                 .id(rs.getInt("id"))
                 .firstName(rs.getString("first_name"))
                 .lastName(rs.getString("last_name"))
-                .playerNum(rs.getInt("player_num"))
+                .primaryNum(rs.getInt("primary_num"))
                 .clubId(rs.getInt("club_id"))
                 .playerPhoto(rs.getString("player_photo"))
                 .power(rs.getInt("power"))
                 .stuff(rs.getInt("stuff"))
                 .control(rs.getInt("control"))
-                .contract(rs.getInt("contract"))
+                .contact(rs.getInt("contact"))
                 .discipline(rs.getInt("discipline"))
                 .build();
     }
