@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class User {
 
+    private Integer squadId;
+
     private Integer userId;
 
     private String password;

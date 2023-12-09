@@ -7,6 +7,7 @@ public record BatterResponse(
         String lastName,
         String clubName,
         String position,
+        int primaryNum,
         int gamePlayed,
         int homeruns,
         int plates
@@ -18,6 +19,7 @@ public record BatterResponse(
                 batter.getLastName(),
                 batter.getClubName(),
                 batter.getPosition(),
+                batter.getPrimaryNum(),
                 batter.getGamePlayed(),
                 batter.getHomeruns(),
                 batter.getPlates()

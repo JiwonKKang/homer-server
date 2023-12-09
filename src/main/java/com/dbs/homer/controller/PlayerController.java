@@ -9,10 +9,7 @@ import com.dbs.homer.controller.response.PlayerResponse;
 import com.dbs.homer.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +21,7 @@ public class PlayerController {
     private final PlayerService playerService;
 
     @GetMapping("/squads/{squadId}")
-    public ResponseEntity<MySquadResponse> mySquad(@PathVariable Integer squadId) {
+    public ResponseEntity<MySquadResponse> squad(@PathVariable Integer squadId) {
 
         MySquadResponse response = MySquadResponse.from(playerService.findPlayersBySquadId(squadId));
 
@@ -32,7 +29,7 @@ public class PlayerController {
     }
 
     @GetMapping("/players")
-    public ResponseEntity<List<PlayerResponse>> searchPlayer(@RequestBody SearchCond cond) {
+    public ResponseEntity<List<PlayerResponse>> searchPlayer(@RequestParam SearchCond cond) {
 
         if (cond.clubName().isEmpty() && cond.position().describeConstable().isEmpty()) {
             return ResponseEntity.badRequest().body(null);

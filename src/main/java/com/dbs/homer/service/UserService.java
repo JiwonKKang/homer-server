@@ -1,6 +1,7 @@
 package com.dbs.homer.service;
 
 import com.dbs.homer.repository.UserRepository;
+import com.dbs.homer.repository.domain.SquadStatistic;
 import com.dbs.homer.repository.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,4 +20,11 @@ public class UserService {
         return userRepository.findRivalUsers(userId);
     }
 
+    public SquadStatistic getStatisticByUserId(Integer userId) {
+        return userRepository.getStatisticBySquadId(userId);
+    }
+
+    public User findByUserId(Integer userId) {
+        return userRepository.findByUserId(userId);
+    }
 }

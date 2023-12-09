@@ -15,6 +15,7 @@ public class Batter {
     private String firstName;
     private String lastName;
     private String clubName;
+    private int primaryNum;
     private int position;
     private int gamePlayed;
     private int homeruns;
