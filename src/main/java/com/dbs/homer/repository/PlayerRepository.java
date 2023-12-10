@@ -30,11 +30,12 @@ public class PlayerRepository {
                 CASE
                 WHEN bs.plates = 0 THEN 0
                 ELSE bs.hits / bs.plates END AS avg
-                FROM player p\s
+                FROM player p
                 JOIN batter bs ON p.id = bs.player_id
-                JOIN club c ON p.club_id = c.club_id 
+                JOIN club c ON p.club_id = c.club_id
                 WHERE bs.squad_id = ?
-                AND bs.position NOT IN (0, 1);""";
+                AND bs.position NOT IN (0, 1);
+                """;
         return template.query(sql, batterRowMapper(), squadId);
     }
 
@@ -44,7 +45,7 @@ public class PlayerRepository {
                 CASE
                 WHEN ps.innings = 0 THEN 0
                 ELSE (ps.earned_runs / ps.innings * 9) END AS era
-                FROM player p\s
+                FROM player p
                 JOIN pitcher ps ON p.id = ps.player_id
                 JOIN club c ON p.club_id = c.club_id
                 WHERE ps.squad_id = ?
@@ -86,7 +87,7 @@ public class PlayerRepository {
     public List<Player> searchPlayer(SearchCond cond) {
 
         String playerName = cond.playerName();
-        String clubName = cond.clubName();
+        Integer clubId = cond.clubId();
         Integer position = cond.position();
 
         if (position == 1) {
@@ -96,17 +97,17 @@ public class PlayerRepository {
                 JOIN club c ON p.club_id = c.club_id
                 JOIN player_position pp ON p.id = pp.player_id
                 WHERE pp.position IN (0, 1)
-                AND c.name = ?
+                AND c.club_id = ?
                 """;
 
             if (StringUtils.hasText(playerName)) {
                 sql += " AND (p.first_name LIKE CONCAT('%', ?, '%') OR p.last_name LIKE CONCAT('%', ?, '%'))";
                 log.info("sql - {}", sql);
-                return template.query(sql, playerRowMapper(), clubName, playerName, playerName);
+                return template.query(sql, playerRowMapper(), clubId, playerName, playerName);
             }
 
             log.info("sql - {}", sql);
-            return template.query(sql, playerRowMapper(), clubName);
+            return template.query(sql, playerRowMapper(), clubId);
         }
 
         String sql = """
@@ -115,16 +116,16 @@ public class PlayerRepository {
                 JOIN club c ON p.club_id = c.club_id
                 JOIN player_position pp ON p.id = pp.player_id
                 WHERE pp.position = ?
-                AND c.name = ?
+                AND c.club_id = ?
                 """;
 
         if (StringUtils.hasText(playerName)) {
             sql += " AND (p.first_name LIKE CONCAT('%', ?, '%') OR p.last_name LIKE CONCAT('%', ?, '%'))";
             log.info("sql - {}", sql);
-            return template.query(sql, playerRowMapper(), position, clubName, playerName, playerName);
+            return template.query(sql, playerRowMapper(), position, clubId, playerName, playerName);
         }
         log.info("sql - {}", sql);
-        return template.query(sql, playerRowMapper(), position, clubName);
+        return template.query(sql, playerRowMapper(), position, clubId);
     }
 
 
