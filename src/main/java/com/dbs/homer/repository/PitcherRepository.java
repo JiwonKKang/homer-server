@@ -1,6 +1,8 @@
 package com.dbs.homer.repository;
 
 import com.dbs.homer.controller.dto.PlayerDTO;
+import com.dbs.homer.repository.domain.Batter;
+import com.dbs.homer.repository.domain.Pitcher;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -39,5 +41,21 @@ public class PitcherRepository {
 
         template.update(sql, param);
     }
+
+    public void updateRecord(Pitcher pitcher) {
+        String sql = "update pitcher set games_played = :gamesPlayed, innings = :innings, wins = :wins, losses = :losses, earned_runs = :earnedRuns\n"
+                + "where player_id = :playerId";
+
+        MapSqlParameterSource param = new MapSqlParameterSource()
+                .addValue("gamesPlayed", pitcher.getGamePlayed())
+                .addValue("innings", pitcher.getInnings())
+                .addValue("wins", pitcher.getWins())
+                .addValue("losses", pitcher.getLosses())
+                .addValue("earnedRuns", pitcher.getEarnedRuns())
+                .addValue("playerId", pitcher.getPlayerId());
+
+        template.update(sql,param);
+    }
+
 
 }
