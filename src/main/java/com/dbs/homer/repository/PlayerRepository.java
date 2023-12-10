@@ -34,7 +34,8 @@ public class PlayerRepository {
                 JOIN batter bs ON p.id = bs.player_id
                 JOIN club c ON p.club_id = c.club_id 
                 WHERE bs.squad_id = ?
-                AND bs.position NOT IN (0, 1);""";
+                AND bs.position NOT IN (0, 1)
+                ORDER BY position ASC;""";
         return template.query(sql, batterRowMapper(), squadId);
     }
 
