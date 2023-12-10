@@ -1,10 +1,7 @@
 package com.dbs.homer.controller;
 
-import com.dbs.homer.controller.dto.MySquad;
 import com.dbs.homer.controller.request.SearchCond;
-import com.dbs.homer.controller.response.BatterResponse;
 import com.dbs.homer.controller.response.MySquadResponse;
-import com.dbs.homer.controller.response.PitcherResponse;
 import com.dbs.homer.controller.response.PlayerResponse;
 import com.dbs.homer.service.PlayerService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +28,7 @@ public class PlayerController {
     @GetMapping("/players")
     public ResponseEntity<List<PlayerResponse>> searchPlayer(SearchCond cond) {
 
-        if (cond.clubName().isEmpty() && cond.position().describeConstable().isEmpty()) {
+        if (cond.clubId().describeConstable().isEmpty() && cond.position().describeConstable().isEmpty()) {
             return ResponseEntity.badRequest().body(null);
         }
 

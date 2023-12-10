@@ -87,7 +87,7 @@ public class PlayerRepository {
     public List<Player> searchPlayer(SearchCond cond) {
 
         String playerName = cond.playerName();
-        String clubName = cond.clubName();
+        Integer clubId = cond.clubId();
         Integer position = cond.position();
 
         if (position == 1) {
@@ -97,17 +97,17 @@ public class PlayerRepository {
                 JOIN club c ON p.club_id = c.club_id
                 JOIN player_position pp ON p.id = pp.player_id
                 WHERE pp.position IN (0, 1)
-                AND c.name = ?
+                AND c.club_id = ?
                 """;
 
             if (StringUtils.hasText(playerName)) {
                 sql += " AND (p.first_name LIKE CONCAT('%', ?, '%') OR p.last_name LIKE CONCAT('%', ?, '%'))";
                 log.info("sql - {}", sql);
-                return template.query(sql, playerRowMapper(), clubName, playerName, playerName);
+                return template.query(sql, playerRowMapper(), clubId, playerName, playerName);
             }
 
             log.info("sql - {}", sql);
-            return template.query(sql, playerRowMapper(), clubName);
+            return template.query(sql, playerRowMapper(), clubId);
         }
 
         String sql = """
@@ -116,16 +116,16 @@ public class PlayerRepository {
                 JOIN club c ON p.club_id = c.club_id
                 JOIN player_position pp ON p.id = pp.player_id
                 WHERE pp.position = ?
-                AND c.name = ?
+                AND c.club_id = ?
                 """;
 
         if (StringUtils.hasText(playerName)) {
             sql += " AND (p.first_name LIKE CONCAT('%', ?, '%') OR p.last_name LIKE CONCAT('%', ?, '%'))";
             log.info("sql - {}", sql);
-            return template.query(sql, playerRowMapper(), position, clubName, playerName, playerName);
+            return template.query(sql, playerRowMapper(), position, clubId, playerName, playerName);
         }
         log.info("sql - {}", sql);
-        return template.query(sql, playerRowMapper(), position, clubName);
+        return template.query(sql, playerRowMapper(), position, clubId);
     }
 
 
