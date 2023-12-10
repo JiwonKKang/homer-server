@@ -32,7 +32,7 @@ public class PlayerRepository {
                 ELSE bs.hits / bs.plates END AS avg
                 FROM player p\s
                 JOIN batter bs ON p.id = bs.player_id
-                JOIN club c ON p.club_id = c.club_id
+                JOIN club c ON p.club_id = c.club_id 
                 WHERE bs.squad_id = ?
                 AND bs.position NOT IN (0, 1);""";
         return template.query(sql, batterRowMapper(), squadId);
