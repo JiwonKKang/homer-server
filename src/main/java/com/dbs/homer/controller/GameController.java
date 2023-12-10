@@ -17,7 +17,7 @@ public class GameController {
 
     private final GameService gameService;
 
-    @PostMapping("/game/{homeId}")
+    @PostMapping("/match/{homeId}")
     public HashMap<Integer, List<String>> playGame(@PathVariable Integer homeId, Integer awayId) {
         return gameService.playGame(homeId, awayId);
     }
