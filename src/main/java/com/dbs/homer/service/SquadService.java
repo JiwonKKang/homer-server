@@ -1,6 +1,6 @@
 package com.dbs.homer.service;
 
-import com.dbs.homer.controller.request.PlayerDTO;
+import com.dbs.homer.controller.dto.PlayerDTO;
 import com.dbs.homer.controller.request.PlayerRequest;
 import com.dbs.homer.controller.request.SquadRequest;
 import com.dbs.homer.controller.request.SquadUpdateRequest;

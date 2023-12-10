@@ -1,5 +1,6 @@
 package com.dbs.homer.repository;
 
+import com.dbs.homer.repository.domain.Rival;
 import com.dbs.homer.repository.domain.SquadStatistic;
 import com.dbs.homer.repository.domain.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -19,16 +20,16 @@ public class UserRepository {
         this.template = new JdbcTemplate(dataSource);
     }
 
-    public List<User> findRivalUsers(Integer userId) {
+    public List<Rival> findRivalUsers(Integer userId) {
 
         String sql = """
-                SELECT u.user_id, u.owner_name, u.email, u.password, s.squad_id
+                SELECT u.owner_name, u.email, s.squad_id
                 FROM squad s
                 JOIN user u ON s.user_id = u.user_id
                 WHERE s.user_id <> ?;
                 """;
 
-        return template.query(sql, userRowMapper(), userId);
+        return template.query(sql, rivalRowMapper(), userId);
     }
 
     public SquadStatistic getStatisticBySquadId(Integer userId) {
@@ -46,17 +47,21 @@ public class UserRepository {
     public User findByUserId(Integer userId) {
 
         String sql = """
-                SELECT u.user_id, u.owner_name, u.email, u.password, s.squad_id
-                FROM squad s
-                JOIN user u ON s.user_id = u.user_id
-                WHERE s.user_id = ?
+                SELECT u.user_id, u.owner_name, u.email, u.password
+                FROM user u
+                WHERE u.user_id = ?
                 """;
 
         return template.queryForObject(sql, userRowMapper(), userId);
     }
 
+
     private RowMapper<SquadStatistic> squadStatisticRowMapper() {
         return BeanPropertyRowMapper.newInstance(SquadStatistic.class);
+    }
+
+    private RowMapper<Rival> rivalRowMapper() {
+        return BeanPropertyRowMapper.newInstance(Rival.class);
     }
 
 
@@ -66,7 +71,6 @@ public class UserRepository {
                 .email(rs.getString("email"))
                 .password(rs.getString("password"))
                 .ownerName(rs.getString("owner_name"))
-                .squadId(rs.getInt("squad_id"))
                 .build();
     }
 

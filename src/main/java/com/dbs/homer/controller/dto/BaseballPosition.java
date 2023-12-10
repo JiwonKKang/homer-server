@@ -1,5 +1,7 @@
 package com.dbs.homer.controller.dto;
 
+import lombok.Getter;
+
 public enum BaseballPosition {
     BULLPEN_PITCHER(0, "중간 계투 (불펜 투수)"),
     STARTING_PITCHER(1, "선발 투수"),
@@ -14,6 +16,8 @@ public enum BaseballPosition {
     DESIGNATED_HITTER(10, "지명타자");
 
     private final int code;
+
+    @Getter
     private final String description;
 
     BaseballPosition(int code, String description) {
@@ -21,19 +25,11 @@ public enum BaseballPosition {
         this.description = description;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     // 예를 들어, 코드로부터 Enum 상수를 얻기 위한 정적 메서드
-    public static BaseballPosition getByCode(int code) {
+    public static String getByCode(int code) {
         for (BaseballPosition position : BaseballPosition.values()) {
             if (position.code == code) {
-                return position;
+                return position.getDescription();
             }
         }
         throw new IllegalArgumentException("Invalid BaseballPosition code: " + code);

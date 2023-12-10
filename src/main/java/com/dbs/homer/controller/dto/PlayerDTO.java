@@ -1,4 +1,6 @@
-package com.dbs.homer.controller.request;
+package com.dbs.homer.controller.dto;
+
+import com.dbs.homer.controller.request.PlayerRequest;
 
 public record PlayerDTO(
         Integer playerId,

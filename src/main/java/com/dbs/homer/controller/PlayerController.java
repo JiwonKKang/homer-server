@@ -29,7 +29,7 @@ public class PlayerController {
     }
 
     @GetMapping("/players")
-    public ResponseEntity<List<PlayerResponse>> searchPlayer(@RequestParam SearchCond cond) {
+    public ResponseEntity<List<PlayerResponse>> searchPlayer(SearchCond cond) {
 
         if (cond.clubName().isEmpty() && cond.position().describeConstable().isEmpty()) {
             return ResponseEntity.badRequest().body(null);

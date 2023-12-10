@@ -1,6 +1,9 @@
 package com.dbs.homer.service;
 
+import com.dbs.homer.controller.dto.UserDTO;
+import com.dbs.homer.repository.SquadRepository;
 import com.dbs.homer.repository.UserRepository;
+import com.dbs.homer.repository.domain.Squad;
 import com.dbs.homer.repository.domain.SquadStatistic;
 import com.dbs.homer.repository.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -15,16 +18,25 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final SquadRepository squadRepository;
 
-    public List<User> findRivalUser(Integer userId) {
-        return userRepository.findRivalUsers(userId);
+    public List<UserDTO> findRivalUser(Integer userId) {
+        return userRepository.findRivalUsers(userId).stream().map(UserDTO::from).toList();
     }
 
     public SquadStatistic getStatisticByUserId(Integer userId) {
         return userRepository.getStatisticBySquadId(userId);
     }
 
-    public User findByUserId(Integer userId) {
-        return userRepository.findByUserId(userId);
+    public UserDTO findByUserId(Integer userId) {
+
+        User userInfo = userRepository.findByUserId(userId);
+
+        try {
+            Squad squad = squadRepository.findById(userInfo.getUserId());
+            return UserDTO.of(userInfo.getEmail(), userInfo.getOwnerName(), squad.getSquadId());
+        } catch (Exception e) {
+            return UserDTO.of(userInfo.getEmail(), userInfo.getOwnerName(), null);
+        }
     }
 }

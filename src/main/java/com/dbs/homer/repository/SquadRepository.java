@@ -1,6 +1,8 @@
 package com.dbs.homer.repository;
 
 import com.dbs.homer.repository.domain.Squad;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -40,4 +42,20 @@ public class SquadRepository {
         template.update(sql, param);
     }
 
+    public Squad findById(Integer userId) {
+        String sql = """
+                SELECT *
+                FROM squad
+                WHERE user_id = :userId
+                """;
+
+        MapSqlParameterSource param = new MapSqlParameterSource()
+                .addValue("userId", userId);
+
+        return template.queryForObject(sql, param, squadRowMapper());
+    }
+
+    private RowMapper<Squad> squadRowMapper() {
+        return BeanPropertyRowMapper.newInstance(Squad.class);
+    }
 }

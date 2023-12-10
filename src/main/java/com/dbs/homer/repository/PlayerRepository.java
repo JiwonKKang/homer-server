@@ -26,7 +26,7 @@ public class PlayerRepository {
 
     public List<Batter> findBatterBySquadId(Integer squadId) {
         String sql = """
-                SELECT p.first_name, p.last_name, c.name, bs.position, bs.games_played, bs.homeruns, bs.plates, p.primary_num,
+                SELECT p.first_name, p.last_name, c.name, bs.position, bs.games_played, bs.homeruns, bs.plates, p.primary_num, p.player_photo,
                 CASE
                 WHEN bs.plates = 0 THEN 0
                 ELSE bs.hits / bs.plates END AS avg
@@ -40,7 +40,7 @@ public class PlayerRepository {
 
     public Pitcher findPitcherBySquadId(Integer squadId) {
         String sql = """
-                SELECT p.first_name, p.last_name, c.name, ps.position, ps.games_played, ps.innings, ps.wins, ps.losses, p.primary_num,
+                SELECT p.first_name, p.last_name, c.name, ps.position, ps.games_played, ps.innings, ps.wins, ps.losses, p.primary_num, p.player_photo,
                 CASE
                 WHEN ps.innings = 0 THEN 0
                 ELSE (ps.earned_runs / ps.innings * 9) END AS era
@@ -59,6 +59,7 @@ public class PlayerRepository {
                 .firstName(rs.getString("first_name"))
                 .lastName(rs.getString("last_name"))
                 .position(rs.getInt("position"))
+                .playerPhoto(rs.getString("player_photo"))
                 .primaryNum(rs.getInt("primary_num"))
                 .clubName(rs.getString("name"))
                 .innings(rs.getInt("innings"))
@@ -73,6 +74,7 @@ public class PlayerRepository {
                 .firstName(rs.getString("first_name"))
                 .lastName(rs.getString("last_name"))
                 .position(rs.getInt("position"))
+                .playerPhoto(rs.getString("player_photo"))
                 .primaryNum(rs.getInt("primary_num"))
                 .clubName(rs.getString("name"))
                 .homeruns(rs.getInt("homeruns"))

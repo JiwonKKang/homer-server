@@ -1,19 +1,16 @@
 package com.dbs.homer.repository.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class User {
-
-    private Integer userId;
-
-    private String password;
+public class Rival {
 
     private String email;
-
     private String ownerName;
+    private Integer squadId;
 
 }

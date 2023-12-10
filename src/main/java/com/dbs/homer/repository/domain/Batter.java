@@ -15,14 +15,11 @@ public class Batter {
     private String firstName;
     private String lastName;
     private String clubName;
+    private String playerPhoto;
     private int primaryNum;
     private int position;
     private int gamePlayed;
     private int homeruns;
     private int plates;
-
-    public String getPosition() {
-        return BaseballPosition.getByCode(position).getDescription();
-    }
 
 }

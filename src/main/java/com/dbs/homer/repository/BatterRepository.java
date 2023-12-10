@@ -1,17 +1,13 @@
 package com.dbs.homer.repository;
 
-import com.dbs.homer.controller.request.PlayerDTO;
-import com.dbs.homer.repository.domain.Batter;
-import com.dbs.homer.repository.domain.Player;
+import com.dbs.homer.controller.dto.PlayerDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
-import java.util.List;
 import java.util.Set;
 
 @Repository

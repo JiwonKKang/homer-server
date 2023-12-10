@@ -1,17 +1,17 @@
 package com.dbs.homer.controller.response;
 
-import com.dbs.homer.repository.domain.User;
+import com.dbs.homer.controller.dto.UserDTO;
 
 public record UserResponse(
         Integer squadId,
         String email,
         String ownerName
 ) {
-    public static UserResponse from(User user) {
+    public static UserResponse from(UserDTO user) {
         return new UserResponse(
-                user.getSquadId(),
-                user.getEmail(),
-                user.getOwnerName()
+                user.squadId(),
+                user.email(),
+                user.ownerName()
         );
     }
 }
