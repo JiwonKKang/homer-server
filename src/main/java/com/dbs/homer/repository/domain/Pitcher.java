@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class Pitcher {
 
     private Integer playerId;
+    private Integer squadId;
     private String firstName;
     private String lastName;
     private String clubName;
@@ -28,9 +29,11 @@ public class Pitcher {
     public void update(int earnedRuns, boolean win) {
         this.gamePlayed += 1;
         this.innings += 9;
+
         if(win) this.wins += 1;
         else this.losses += 1;
-        this.earnedRuns = earnedRuns;
+
+        this.earnedRuns += earnedRuns;
     }
 
 }

@@ -58,8 +58,8 @@ public class BatterRepository {
     public void updateRecord(Batter batter) {
         String sql = """
                 update batter set games_played = ?, homeruns = ?, plates = ?, hits = ?
-                where player_id = ?""";
-        template.update(sql, batter.getGamePlayed() + 1, batter.getHomeruns(), batter.getPlates(), batter.getHits(), batter.getPlayerId());
+                where player_id = ? and squad_id = ?""";
+        template.update(sql, batter.getGamePlayed() + 1, batter.getHomeruns(), batter.getPlates(), batter.getHits(), batter.getPlayerId(), batter.getSquadId());
     }
 
 }

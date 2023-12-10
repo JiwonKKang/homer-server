@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Batter {
 
     private Integer playerId;
+    private Integer squadId;
     private String firstName;
     private String lastName;
     private String clubName;
