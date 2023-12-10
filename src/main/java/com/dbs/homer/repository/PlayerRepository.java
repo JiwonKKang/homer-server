@@ -30,11 +30,12 @@ public class PlayerRepository {
                 CASE
                 WHEN bs.plates = 0 THEN 0
                 ELSE bs.hits / bs.plates END AS avg
-                FROM player p\s
+                FROM player p
                 JOIN batter bs ON p.id = bs.player_id
-                JOIN club c ON p.club_id = c.club_id 
+                JOIN club c ON p.club_id = c.club_id
                 WHERE bs.squad_id = ?
-                AND bs.position NOT IN (0, 1);""";
+                AND bs.position NOT IN (0, 1);
+                """;
         return template.query(sql, batterRowMapper(), squadId);
     }
 
@@ -44,7 +45,7 @@ public class PlayerRepository {
                 CASE
                 WHEN ps.innings = 0 THEN 0
                 ELSE (ps.earned_runs / ps.innings * 9) END AS era
-                FROM player p\s
+                FROM player p
                 JOIN pitcher ps ON p.id = ps.player_id
                 JOIN club c ON p.club_id = c.club_id
                 WHERE ps.squad_id = ?

@@ -17,9 +17,11 @@ public class ManagerRepository {
     }
 
     public Manager findManagerBySquadId(Integer squadId) {
-        String sql = "SELECT m.name, m.manager_image, m.batter_boost, m.pitcher_boost " +
-                "FROM manager m JOIN squad s ON m.manager_id = s.manager_id\n" +
-                "WHERE s.squad_id = ?;";
+        String sql = """
+                SELECT m.name, m.manager_image, m.batter_boost, m.pitcher_boost
+                FROM manager m JOIN squad s ON m.manager_id = s.manager_id
+                WHERE s.squad_id = ?;
+                """;
         return template.queryForObject(sql, managerRowMapper(), squadId);
     }
 
