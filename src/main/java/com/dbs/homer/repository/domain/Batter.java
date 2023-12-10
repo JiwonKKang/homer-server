@@ -25,7 +25,7 @@ public class Batter {
     private int hits;
     private double avg;
 
-    public void update(boolean hit, boolean homerun){
+    public void update(boolean hit, boolean homerun) {
         this.plates += 1;
         if(hit) this.hits += 1;
         if(homerun) this.homeruns += 1;

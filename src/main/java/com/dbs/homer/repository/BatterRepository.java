@@ -1,6 +1,7 @@
 package com.dbs.homer.repository;
 
 import com.dbs.homer.controller.dto.PlayerDTO;
+import com.dbs.homer.repository.domain.Batter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -52,6 +53,13 @@ public class BatterRepository {
             ps.setInt(2, batter.squadId());
             ps.setInt(3, batter.position());
         });
+    }
+
+    public void updateRecord(Batter batter) {
+        String sql = """
+                update batter set games_played = ?, homeruns = ?, plates = ?, hits = ?
+                where player_id = ?""";
+        template.update(sql, batter.getGamePlayed() + 1, batter.getHomeruns(), batter.getPlates(), batter.getHits(), batter.getPlayerId());
     }
 
 }
