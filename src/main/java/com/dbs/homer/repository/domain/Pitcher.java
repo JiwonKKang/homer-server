@@ -23,6 +23,7 @@ public class Pitcher {
     private int wins;
     private int losses;
     private int earnedRuns;
+    private double era;
 
     public void update(int earnedRuns, boolean win) {
         this.gamePlayed += 1;

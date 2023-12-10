@@ -26,26 +26,25 @@ public class PlayerRepository {
 
     public List<Batter> findBatterBySquadId(Integer squadId) {
         String sql = """
-                SELECT p.first_name, p.last_name, c.name, bs.position, bs.games_played, bs.homeruns, bs.plates, p.primary_num, p.player_photo, bs.player_id ,
+                SELECT p.first_name, p.last_name, c.name, bs.position, bs.player_id, bs.games_played, bs.homeruns, bs.plates, p.primary_num, p.player_photo,
                 CASE
                 WHEN bs.plates = 0 THEN 0
                 ELSE bs.hits / bs.plates END AS avg
-                FROM player p
+                FROM player p\s
                 JOIN batter bs ON p.id = bs.player_id
-                JOIN club c ON p.club_id = c.club_id
+                JOIN club c ON p.club_id = c.club_id 
                 WHERE bs.squad_id = ?
-                AND bs.position NOT IN (0, 1);
-                """;
+                AND bs.position NOT IN (0, 1);""";
         return template.query(sql, batterRowMapper(), squadId);
     }
 
     public Pitcher findPitcherBySquadId(Integer squadId) {
         String sql = """
-                SELECT p.first_name, p.last_name, c.name, ps.position, ps.games_played, ps.innings, ps.wins, ps.losses, p.primary_num, p.player_photo, ps.player_id,
+                SELECT p.first_name, p.last_name, c.name, ps.position, ps.player_id, ps.games_played, ps.innings, ps.wins, ps.losses, p.primary_num, p.player_photo,
                 CASE
                 WHEN ps.innings = 0 THEN 0
                 ELSE (ps.earned_runs / ps.innings * 9) END AS era
-                FROM player p
+                FROM player p\s
                 JOIN pitcher ps ON p.id = ps.player_id
                 JOIN club c ON p.club_id = c.club_id
                 WHERE ps.squad_id = ?
@@ -68,6 +67,7 @@ public class PlayerRepository {
                 .gamePlayed(rs.getInt("games_played"))
                 .losses(rs.getInt("losses"))
                 .wins(rs.getInt("wins"))
+                .era(rs.getDouble("era"))
                 .build();
     }
 
@@ -83,6 +83,7 @@ public class PlayerRepository {
                 .homeruns(rs.getInt("homeruns"))
                 .plates(rs.getInt("plates"))
                 .gamePlayed(rs.getInt("games_played"))
+                .avg(rs.getDouble("avg"))
                 .build();
     }
 
@@ -94,7 +95,7 @@ public class PlayerRepository {
 
         if (position == 1) {
             String sql = """
-                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num, pp.player_id
+                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num
                 FROM player p
                 JOIN club c ON p.club_id = c.club_id
                 JOIN player_position pp ON p.id = pp.player_id
@@ -113,7 +114,7 @@ public class PlayerRepository {
         }
 
         String sql = """
-                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num, pp.player_id
+                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num
                 FROM player p
                 JOIN club c ON p.club_id = c.club_id
                 JOIN player_position pp ON p.id = pp.player_id
@@ -130,6 +131,15 @@ public class PlayerRepository {
         return template.query(sql, playerRowMapper(), position, clubId);
     }
 
+    public Player findPlayerById(Integer id) {
+        String sql = """
+            SELECT p.first_name, p.last_name, p.contact, p.power, p.discipline, p.control, p.stuff
+            FROM player p
+            WHERE p.id = ?
+            """;
+
+        return template.queryForObject(sql, playerRowMapper(), id);
+    }
 
     private RowMapper<Player> playerRowMapper() {
         return BeanPropertyRowMapper.newInstance(Player.class);

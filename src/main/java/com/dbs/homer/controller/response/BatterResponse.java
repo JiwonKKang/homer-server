@@ -12,7 +12,8 @@ public record BatterResponse(
         int primaryNum,
         int gamePlayed,
         int homeruns,
-        int plates
+        int plates,
+        double avg
 ) {
 
     public static BatterResponse from(Batter batter) {
@@ -26,7 +27,8 @@ public record BatterResponse(
                 batter.getPrimaryNum(),
                 batter.getGamePlayed(),
                 batter.getHomeruns(),
-                batter.getPlates()
+                batter.getPlates(),
+                batter.getAvg()
         );
     }
 

@@ -13,7 +13,8 @@ public record PitcherResponse(
         int gamePlayed,
         int innings,
         int wins,
-        int losses
+        int losses,
+        double era
 ) {
     public static PitcherResponse from(Pitcher pitcher) {
         return new PitcherResponse(
@@ -27,7 +28,8 @@ public record PitcherResponse(
                 pitcher.getGamePlayed(),
                 pitcher.getInnings(),
                 pitcher.getWins(),
-                pitcher.getLosses()
+                pitcher.getLosses(),
+                pitcher.getEra()
         );
     }
 
