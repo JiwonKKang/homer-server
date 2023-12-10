@@ -95,7 +95,7 @@ public class PlayerRepository {
 
         if (position == 1) {
             String sql = """
-                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num
+                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num, pp.player_id
                 FROM player p
                 JOIN club c ON p.club_id = c.club_id
                 JOIN player_position pp ON p.id = pp.player_id
@@ -114,7 +114,7 @@ public class PlayerRepository {
         }
 
         String sql = """
-                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num
+                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num, pp.player_id
                 FROM player p
                 JOIN club c ON p.club_id = c.club_id
                 JOIN player_position pp ON p.id = pp.player_id
