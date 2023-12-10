@@ -44,7 +44,7 @@ public class PitcherRepository {
 
     public void updateRecord(Pitcher pitcher) {
         String sql = "update pitcher set games_played = :gamesPlayed, innings = :innings, wins = :wins, losses = :losses, earned_runs = :earnedRuns\n"
-                + "where player_id = :playerId";
+                + "where player_id = :playerId and squad_id = :squadId";
 
         MapSqlParameterSource param = new MapSqlParameterSource()
                 .addValue("gamesPlayed", pitcher.getGamePlayed())
@@ -52,7 +52,8 @@ public class PitcherRepository {
                 .addValue("wins", pitcher.getWins())
                 .addValue("losses", pitcher.getLosses())
                 .addValue("earnedRuns", pitcher.getEarnedRuns())
-                .addValue("playerId", pitcher.getPlayerId());
+                .addValue("playerId", pitcher.getPlayerId())
+                .addValue("squadId", pitcher.getSquadId());
 
         template.update(sql,param);
     }
