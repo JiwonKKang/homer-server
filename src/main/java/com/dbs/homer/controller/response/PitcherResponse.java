@@ -1,9 +1,9 @@
 package com.dbs.homer.controller.response;
 
-import com.dbs.homer.repository.domain.Batter;
 import com.dbs.homer.repository.domain.Pitcher;
 
 public record PitcherResponse(
+        Integer playerId,
         String firstName,
         String lastName,
         String clubName,
@@ -17,6 +17,7 @@ public record PitcherResponse(
 ) {
     public static PitcherResponse from(Pitcher pitcher) {
         return new PitcherResponse(
+                pitcher.getPlayerId(),
                 pitcher.getFirstName(),
                 pitcher.getLastName(),
                 pitcher.getClubName(),

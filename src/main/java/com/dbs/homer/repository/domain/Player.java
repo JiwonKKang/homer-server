@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 public class Player {
 
+    private Integer playerId;
     private String firstName;
     private String lastName;
     private String playerPhoto;

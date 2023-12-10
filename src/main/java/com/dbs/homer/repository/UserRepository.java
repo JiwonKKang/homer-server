@@ -35,11 +35,11 @@ public class UserRepository {
     public SquadStatistic getStatisticBySquadId(Integer userId) {
 
         String sql = """
-                        SELECT user_id, home_win_rate, away_win_rate, total_games, total_wins, total_rate\s
-                        FROM squad_statistics ss
-                        JOIN squad s ON s.squad_id = ss.squad_id
-                        WHERE s.user_id = ?;
-                        """;
+                SELECT user_id, home_win_rate, away_win_rate, total_games, total_wins, total_rate
+                FROM squad_statistics ss
+                JOIN squad s ON s.squad_id = ss.squad_id
+                WHERE s.user_id = ?;
+                """;
 
         return template.queryForObject(sql, squadStatisticRowMapper(), userId);
     }

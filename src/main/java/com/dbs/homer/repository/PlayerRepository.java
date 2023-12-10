@@ -26,7 +26,7 @@ public class PlayerRepository {
 
     public List<Batter> findBatterBySquadId(Integer squadId) {
         String sql = """
-                SELECT p.first_name, p.last_name, c.name, bs.position, bs.games_played, bs.homeruns, bs.plates, p.primary_num, p.player_photo,
+                SELECT p.first_name, p.last_name, c.name, bs.position, bs.games_played, bs.homeruns, bs.plates, p.primary_num, p.player_photo, bs.player_id ,
                 CASE
                 WHEN bs.plates = 0 THEN 0
                 ELSE bs.hits / bs.plates END AS avg
@@ -41,7 +41,7 @@ public class PlayerRepository {
 
     public Pitcher findPitcherBySquadId(Integer squadId) {
         String sql = """
-                SELECT p.first_name, p.last_name, c.name, ps.position, ps.games_played, ps.innings, ps.wins, ps.losses, p.primary_num, p.player_photo,
+                SELECT p.first_name, p.last_name, c.name, ps.position, ps.games_played, ps.innings, ps.wins, ps.losses, p.primary_num, p.player_photo, ps.player_id,
                 CASE
                 WHEN ps.innings = 0 THEN 0
                 ELSE (ps.earned_runs / ps.innings * 9) END AS era
@@ -57,6 +57,7 @@ public class PlayerRepository {
 
     private RowMapper<Pitcher> pitcherRowMapper() {
         return (rs, rowNum) -> Pitcher.builder()
+                .playerId(rs.getInt("player_id"))
                 .firstName(rs.getString("first_name"))
                 .lastName(rs.getString("last_name"))
                 .position(rs.getInt("position"))
@@ -72,6 +73,7 @@ public class PlayerRepository {
 
     private RowMapper<Batter> batterRowMapper() {
         return (rs, rowNum) -> Batter.builder()
+                .playerId(rs.getInt("player_id"))
                 .firstName(rs.getString("first_name"))
                 .lastName(rs.getString("last_name"))
                 .position(rs.getInt("position"))
@@ -92,7 +94,7 @@ public class PlayerRepository {
 
         if (position == 1) {
             String sql = """
-                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num
+                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num, pp.player_id
                 FROM player p
                 JOIN club c ON p.club_id = c.club_id
                 JOIN player_position pp ON p.id = pp.player_id
@@ -111,7 +113,7 @@ public class PlayerRepository {
         }
 
         String sql = """
-                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num
+                SELECT p.first_name, p.last_name, p.player_photo, p.contact, p.power, p.discipline, p.control, p.stuff, p.primary_num, pp.player_id
                 FROM player p
                 JOIN club c ON p.club_id = c.club_id
                 JOIN player_position pp ON p.id = pp.player_id

@@ -3,6 +3,7 @@ package com.dbs.homer.controller.response;
 import com.dbs.homer.repository.domain.Player;
 
 public record PlayerResponse(
+        Integer playerId,
         String firstName,
         String lastName,
         String playerPhoto,
@@ -16,6 +17,7 @@ public record PlayerResponse(
 
     public static PlayerResponse from(Player player) {
         return new PlayerResponse(
+                player.getPlayerId(),
                 player.getFirstName(),
                 player.getLastName(),
                 player.getPlayerPhoto(),

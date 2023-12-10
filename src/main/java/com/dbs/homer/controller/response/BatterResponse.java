@@ -3,6 +3,7 @@ package com.dbs.homer.controller.response;
 import com.dbs.homer.repository.domain.Batter;
 
 public record BatterResponse(
+        Integer playerId,
         String firstName,
         String lastName,
         String clubName,
@@ -16,6 +17,7 @@ public record BatterResponse(
 
     public static BatterResponse from(Batter batter) {
         return new BatterResponse(
+                batter.getPlayerId(),
                 batter.getFirstName(),
                 batter.getLastName(),
                 batter.getClubName(),
