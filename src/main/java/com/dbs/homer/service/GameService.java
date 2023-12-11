@@ -58,12 +58,12 @@ public class GameService {
                 int result = pitcherVersusBatter(pitchers[seq], batterId);
                 String resultDescription = null;
                 switch (result) {
-                    case 0 -> resultDescription = "삼진";
-                    case 1 -> resultDescription = "아웃";
-                    case 2 -> resultDescription = "안타";
-                    case 3 -> resultDescription = "2루타";
-                    case 4 -> resultDescription = "홈런";
-                    case 5 -> resultDescription = "볼넷";
+                    case 0 -> resultDescription = "Strike Out";
+                    case 1 -> resultDescription = "Out";
+                    case 2 -> resultDescription = "Hit";
+                    case 3 -> resultDescription = "Double";
+                    case 4 -> resultDescription = "Homerun";
+                    case 5 -> resultDescription = "Base on balls";
                 }
                 if (result == 0 || result == 1) {
                     batters.get(batterSequence[seq]).update(false, false);
@@ -86,13 +86,22 @@ public class GameService {
                 }
 
                 if(batterSequence[seq] == 0) {
-                    batterResult.add("9번 타자 " + batter.getFirstName() + " " + batter.getLastName()
+                    batterResult.add("9th Batter " + batter.getFirstName() + " " + batter.getLastName()
+                            + " " + resultDescription);
+                } else if (batterSequence[seq] == 1) {
+                    batterResult.add(batterSequence[seq] + " st Batter " + batter.getFirstName() + " " + batter.getLastName()
+                            + " " + resultDescription);
+                } else if (batterSequence[seq] == 2) {
+                    batterResult.add(batterSequence[seq] + " nd Batter" + batter.getFirstName() + " " + batter.getLastName()
+                            + " " + resultDescription);
+                } else if (batterSequence[seq] == 3) {
+                    batterResult.add(batterSequence[seq] + " rd Batter" + batter.getFirstName() + " " + batter.getLastName()
+                            + " " + resultDescription);
+                } else {
+                    batterResult.add(batterSequence[seq] + " th Batter" + batter.getFirstName() + " " + batter.getLastName()
                             + " " + resultDescription);
                 }
-                else {
-                    batterResult.add(batterSequence[seq] + "번 타자 " + batter.getFirstName() + " " + batter.getLastName()
-                            + " " + resultDescription);
-                }
+
             }
             results.put(inning, batterResult);
 
