@@ -1,7 +1,6 @@
 package com.dbs.homer.repository;
 
 import com.dbs.homer.controller.dto.PlayerDTO;
-import com.dbs.homer.repository.domain.Batter;
 import com.dbs.homer.repository.domain.Pitcher;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;

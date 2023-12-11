@@ -36,6 +36,7 @@ public class PlayerController {
                 .map(PlayerResponse::from)
                 .collect(Collectors.toList());
 
+
         return ResponseEntity.ok(responses);
     }
 
