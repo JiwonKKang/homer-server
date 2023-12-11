@@ -1,22 +1,23 @@
 package com.dbs.homer.controller.response;
 
-import com.dbs.homer.repository.ManagerRepository;
-import com.dbs.homer.repository.domain.Manager;
+import com.dbs.homer.controller.dto.ManagerDTO;
+import com.dbs.homer.repository.domain.ManagerBoost;
+
+import java.util.List;
 
 public record ManagerResponse(
         Integer managerId,
         String name,
         String photo,
-        int pitcherBoost,
-        int batterBoost
+        List<ManagerBoost> managerBoosts
 ) {
-    public static ManagerResponse from(Manager manager) {
+    public static ManagerResponse from(ManagerDTO manager) {
         return new ManagerResponse(
-                manager.getManagerId(),
-                manager.getName(),
-                manager.getPhoto(),
-                manager.getPitcherBoost(),
-                manager.getBatterBoost()
+                manager.managerId(),
+                manager.name(),
+                manager.photo(),
+                manager.managerBoosts()
         );
     }
+
 }

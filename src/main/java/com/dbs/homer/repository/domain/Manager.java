@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.relational.core.sql.In;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,7 +17,5 @@ public class Manager {
     private Integer managerId;
     private String name;
     private String photo;
-    private int pitcherBoost;
-    private int batterBoost;
 
 }

@@ -20,7 +20,8 @@ public class GameRepository {
     public void save(LocalDate startDate, Integer homeId, Integer awayId, String winTeam, int homeScore, int awayScore) {
         String sql = """
                     insert into game (start_date, home_id, away_id, win_team, home_score, away_score)
-                    values (?, ?, ?, ?, ?, ?)""";
+                    values (?, ?, ?, ?, ?, ?)
+                    """;
         template.update(sql, startDate, homeId, awayId, winTeam, homeScore, awayScore);
     }
 

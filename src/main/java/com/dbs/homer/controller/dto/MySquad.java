@@ -9,10 +9,10 @@ import java.util.List;
 public record MySquad(
         List<Batter> batters,
         Pitcher pitcher,
-        Manager manager
+        ManagerDTO manager
 ) {
 
-    public static MySquad of(List<Batter> batters, Pitcher pitcher, Manager manager) {
+    public static MySquad of(List<Batter> batters, Pitcher pitcher, ManagerDTO manager) {
         return new MySquad(
                 batters,
                 pitcher,

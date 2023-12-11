@@ -1,6 +1,8 @@
 package com.dbs.homer.repository;
 
 import com.dbs.homer.repository.domain.Manager;
+import com.dbs.homer.repository.domain.ManagerBoost;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -19,7 +21,7 @@ public class ManagerRepository {
 
     public Manager findManagerBySquadId(Integer squadId) {
         String sql = """
-                SELECT m.name, m.manager_image, m.batter_boost, m.pitcher_boost, m.manager_id
+                SELECT m.name, m.manager_image, m.manager_id
                 FROM manager m JOIN squad s ON m.manager_id = s.manager_id
                 WHERE s.squad_id = ?;
                 """;
@@ -35,14 +37,22 @@ public class ManagerRepository {
         return template.query(sql, managerRowMapper());
     }
 
+    public List<ManagerBoost> findBoostByManagerId(Integer managerId) {
+        String sql = "SELECT ability, ability_value FROM manager_boost where manager_id = ?";
+
+        return template.query(sql, managerBoostRowMapper(), managerId);
+    }
+
     private RowMapper<Manager> managerRowMapper() {
         return (rs, rowNum) -> Manager.builder()
                 .managerId(rs.getInt("manager_id"))
                 .name(rs.getString("name"))
                 .photo(rs.getString("manager_image"))
-                .batterBoost(rs.getInt("batter_boost"))
-                .pitcherBoost(rs.getInt("pitcher_boost"))
                 .build();
+    }
+
+    private RowMapper<ManagerBoost> managerBoostRowMapper() {
+        return BeanPropertyRowMapper.newInstance(ManagerBoost.class);
     }
 
 
