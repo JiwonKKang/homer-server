@@ -90,14 +90,15 @@ public class GameService {
             }
             results.put(inning, batterResult);
 
+            int inningScore = 0;
             for(int i = base.size(); i > 3; i--) {
                 if(base.remove() > 0) {
-                    score[seq]++;
+                    inningScore++;
                 }
             }
-
+            score[seq] += inningScore;
             List<String> addScore = results.get(inning);
-            addScore.add(String.valueOf(score[seq]));
+            addScore.add(String.valueOf(inningScore));
             results.put(inning, addScore);
             base.clear();
         }

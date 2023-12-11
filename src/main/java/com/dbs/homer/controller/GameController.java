@@ -2,6 +2,7 @@ package com.dbs.homer.controller;
 
 import com.dbs.homer.service.GameService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class GameController {
     private final GameService gameService;
 
     @PostMapping("/match/{homeId}")
-    public HashMap<Integer, List<String>> playGame(@PathVariable Integer homeId, Integer awayId) {
+    public HashMap<Integer, List<String>> playGame(@PathVariable Integer homeId, @RequestParam Integer awayId) {
         return gameService.playGame(homeId, awayId);
     }
 
