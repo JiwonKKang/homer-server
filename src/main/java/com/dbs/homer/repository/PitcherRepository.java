@@ -31,7 +31,7 @@ public class PitcherRepository {
 
     public void update(PlayerDTO dto) {
 
-        String sql = "UPDATE pitcher SET player_id = :playerId WHERE squad_id = :squadId AND position = :position";
+        String sql = "UPDATE pitcher p SET p.player_id = :playerId, p.earned_runs = 0, p.games_played= 0, p.innings= 0, p.losses= 0, p.wins= 0 WHERE squad_id = :squadId AND position = :position";
 
         MapSqlParameterSource param = new MapSqlParameterSource()
                 .addValue("playerId", dto.playerId())

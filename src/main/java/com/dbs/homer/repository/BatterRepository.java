@@ -44,7 +44,7 @@ public class BatterRepository {
     }
 
     public void updateAll(Set<PlayerDTO> batters) {
-        String sql = "UPDATE batter SET player_id = ? where squad_id = ? AND position = ?";
+        String sql = "UPDATE batter b SET player_id = ?, b.games_played = 0, b.hits = 0, b.homeruns = 0, b.plates = 0 where squad_id = ? AND position = ?";
         template.batchUpdate(sql,
                 batters,
                 batters.size(),
