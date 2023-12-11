@@ -85,8 +85,14 @@ public class GameService {
                     base.add(0);
                 }
 
-                batterResult.add(batterSequence[seq] + "번 타자 " + batter.getFirstName() + " " + batter.getLastName()
-                        + " " + resultDescription);
+                if(batterSequence[seq] == 0) {
+                    batterResult.add("9번 타자 " + batter.getFirstName() + " " + batter.getLastName()
+                            + " " + resultDescription);
+                }
+                else {
+                    batterResult.add(batterSequence[seq] + "번 타자 " + batter.getFirstName() + " " + batter.getLastName()
+                            + " " + resultDescription);
+                }
             }
             results.put(inning, batterResult);
 
