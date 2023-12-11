@@ -89,16 +89,16 @@ public class GameService {
                     batterResult.add("9th Batter " + batter.getFirstName() + " " + batter.getLastName()
                             + " " + resultDescription);
                 } else if (batterSequence[seq] == 1) {
-                    batterResult.add(batterSequence[seq] + " st Batter " + batter.getFirstName() + " " + batter.getLastName()
+                    batterResult.add(batterSequence[seq] + "st Batter " + batter.getFirstName() + " " + batter.getLastName()
                             + " " + resultDescription);
                 } else if (batterSequence[seq] == 2) {
-                    batterResult.add(batterSequence[seq] + " nd Batter" + batter.getFirstName() + " " + batter.getLastName()
+                    batterResult.add(batterSequence[seq] + "nd Batter " + batter.getFirstName() + " " + batter.getLastName()
                             + " " + resultDescription);
                 } else if (batterSequence[seq] == 3) {
-                    batterResult.add(batterSequence[seq] + " rd Batter" + batter.getFirstName() + " " + batter.getLastName()
+                    batterResult.add(batterSequence[seq] + "rd Batter " + batter.getFirstName() + " " + batter.getLastName()
                             + " " + resultDescription);
                 } else {
-                    batterResult.add(batterSequence[seq] + " th Batter" + batter.getFirstName() + " " + batter.getLastName()
+                    batterResult.add(batterSequence[seq] + "th Batter " + batter.getFirstName() + " " + batter.getLastName()
                             + " " + resultDescription);
                 }
 
