@@ -26,13 +26,13 @@ public class PlayerRepository {
 
     public List<Batter> findBatterBySquadId(Integer squadId) {
         String sql = """
-                SELECT p.first_name, p.last_name, c.name, bs.position, bs.player_id, bs.games_played, bs.homeruns, bs.plates, p.primary_num, p.player_photo,
+                SELECT p.first_name, p.last_name, c.name, bs.squad_id, bs.position, bs.player_id, bs.games_played, bs.homeruns, bs.plates, p.primary_num, p.player_photo,
                 CASE
                 WHEN bs.plates = 0 THEN 0
                 ELSE bs.hits / bs.plates END AS avg
                 FROM player p\s
                 JOIN batter bs ON p.id = bs.player_id
-                JOIN club c ON p.club_id = c.club_id 
+                JOIN club c ON p.club_id = c.club_id
                 WHERE bs.squad_id = ?
                 AND bs.position NOT IN (0, 1)
                 ORDER BY position ASC;""";
@@ -41,7 +41,7 @@ public class PlayerRepository {
 
     public Pitcher findPitcherBySquadId(Integer squadId) {
         String sql = """
-                SELECT p.first_name, p.last_name, c.name, ps.position, ps.player_id, ps.games_played, ps.innings, ps.wins, ps.losses, p.primary_num, p.player_photo,
+                SELECT p.first_name, p.last_name, c.name, ps.squad_id, ps.position, ps.player_id, ps.games_played, ps.innings, ps.wins, ps.losses, p.primary_num, p.player_photo,
                 CASE
                 WHEN ps.innings = 0 THEN 0
                 ELSE (ps.earned_runs / ps.innings * 9) END AS era
@@ -58,6 +58,7 @@ public class PlayerRepository {
     private RowMapper<Pitcher> pitcherRowMapper() {
         return (rs, rowNum) -> Pitcher.builder()
                 .playerId(rs.getInt("player_id"))
+                .squadId(rs.getInt("squad_id"))
                 .firstName(rs.getString("first_name"))
                 .lastName(rs.getString("last_name"))
                 .position(rs.getInt("position"))
@@ -75,6 +76,7 @@ public class PlayerRepository {
     private RowMapper<Batter> batterRowMapper() {
         return (rs, rowNum) -> Batter.builder()
                 .playerId(rs.getInt("player_id"))
+                .squadId(rs.getInt("squad_id"))
                 .firstName(rs.getString("first_name"))
                 .lastName(rs.getString("last_name"))
                 .position(rs.getInt("position"))

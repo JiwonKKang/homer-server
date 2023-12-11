@@ -156,7 +156,7 @@ public class GameService {
         else if (hitRate > 42) hitRate = 42;
 
         int slugRate = power - stuff / 5;
-        int bbRate = (100 - control) / 4 + (discipline / 6);
+        int bbRate = (100 - control) / 5 + (discipline / 8);
 
         if (bbRate > 40) bbRate = 40;
 
@@ -168,9 +168,9 @@ public class GameService {
         if (randBb < bbRate)
             result = 5;
         else if (randHit < hitRate)
-            if (randHit * 4.5 < slugRate)
+            if (randHit * 5.5 < slugRate)
                 result = 4;
-            else if (randHit * 2 < slugRate)
+            else if (randHit * 3 < slugRate)
                 result = 3;
             else
                 result = 2;
