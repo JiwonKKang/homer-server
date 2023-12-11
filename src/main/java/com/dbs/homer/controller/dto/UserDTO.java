@@ -6,14 +6,16 @@ import org.springframework.data.relational.core.sql.In;
 public record UserDTO(
         String email,
         String ownerName,
-        Integer squadId
+        Integer squadId,
+        Integer userId
 ) {
 
-    public static UserDTO of(String email, String ownerName, Integer squadId) {
+    public static UserDTO of(String email, String ownerName, Integer squadId, Integer userId) {
         return new UserDTO(
                 email,
                 ownerName,
-                squadId
+                squadId,
+                userId
         );
     }
 
@@ -21,7 +23,8 @@ public record UserDTO(
         return new UserDTO(
                 rival.getEmail(),
                 rival.getOwnerName(),
-                rival.getSquadId()
+                rival.getSquadId(),
+                rival.getUserId()
         );
     }
 }

@@ -34,9 +34,9 @@ public class UserService {
 
         try {
             Squad squad = squadRepository.findById(userInfo.getUserId());
-            return UserDTO.of(userInfo.getEmail(), userInfo.getOwnerName(), squad.getSquadId());
+            return UserDTO.of(userInfo.getEmail(), userInfo.getOwnerName(), squad.getSquadId(), userInfo.getUserId());
         } catch (Exception e) {
-            return UserDTO.of(userInfo.getEmail(), userInfo.getOwnerName(), null);
+            return UserDTO.of(userInfo.getEmail(), userInfo.getOwnerName(), userInfo.getUserId(), null);
         }
     }
 }

@@ -23,7 +23,7 @@ public class UserRepository {
     public List<Rival> findRivalUsers(Integer userId) {
 
         String sql = """
-                SELECT u.owner_name, u.email, s.squad_id
+                SELECT u.owner_name, u.email, s.squad_id, u.user_id
                 FROM squad s
                 JOIN user u ON s.user_id = u.user_id
                 WHERE s.user_id <> ?;

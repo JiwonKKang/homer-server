@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Rival {
 
+    private Integer userId;
     private String email;
     private String ownerName;
     private Integer squadId;
