@@ -53,7 +53,7 @@ public class BatterRepository {
             ps.setInt(2, batter.squadId());
             ps.setInt(3, batter.position());
         });
-    }
+    } //TODO : 모든 선수 기록 초기화되는 버그
 
     public void updateRecord(Batter batter) {
         String sql = """

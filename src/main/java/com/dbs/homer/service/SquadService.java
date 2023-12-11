@@ -6,12 +6,15 @@ import com.dbs.homer.controller.request.SquadRequest;
 import com.dbs.homer.controller.request.SquadUpdateRequest;
 import com.dbs.homer.repository.BatterRepository;
 import com.dbs.homer.repository.PitcherRepository;
+import com.dbs.homer.repository.PlayerRepository;
 import com.dbs.homer.repository.SquadRepository;
+import com.dbs.homer.repository.domain.Batter;
 import com.dbs.homer.repository.domain.Squad;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,6 +26,7 @@ public class SquadService {
     private final BatterRepository batterRepository;
     private final PitcherRepository pitcherRepository;
     private final SquadRepository squadRepository;
+    private final PlayerRepository playerRepository;
 
     @Transactional
     public void createSquad(SquadRequest req) {
@@ -38,7 +42,15 @@ public class SquadService {
         Integer squadId = req.squadId();
 
         squadRepository.update(req.squadId(), req.managerId());
-        batterRepository.updateAll(extractBatters(req.players(), squadId));
+
+
+        List<Integer> batterIdList = playerRepository.findBatterBySquadId(squadId).stream()
+                .map(Batter::getPlayerId)
+                .toList();
+        Set<PlayerDTO> updatedBatters = extractBatters(req.players(), squadId).stream()
+                .filter(playerDTO -> !batterIdList.contains(playerDTO.playerId()))
+                .collect(Collectors.toSet());
+        batterRepository.updateAll(updatedBatters);
         pitcherRepository.update(extractPitcher(req.players(), squadId));
     }
 
