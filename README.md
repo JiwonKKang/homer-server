@@ -4,7 +4,7 @@ MLB 야구 데이터를 이용한 야구 시뮬레이션 게임입니다.<br>
 자신만의 야구팀을 꾸려 다른 유저의 스쿼드와 겨뤄볼수있습니다.
 
 ## Stack
-Front : Veiw.js  
+Front : View.js  
 Server: Spring Boot, Java, JDBC Template, MySQL  
 AWS : AWS RDS  
 Tools : Azure DevOps  
