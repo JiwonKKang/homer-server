@@ -5,8 +5,8 @@ MLB 야구 데이터를 이용한 야구 시뮬레이션 게임입니다.<br>
 
 ## Stack
 Front : Veiw.js  
-Server: Spring Boot, Java, JDBC Template, MySQL
-AWS : AWS RDS
+Server: Spring Boot, Java, JDBC Template, MySQL  
+AWS : AWS RDS  
 Tools : Azure DevOps  
 
 
